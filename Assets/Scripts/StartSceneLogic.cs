@@ -24,7 +24,9 @@ public class StartSceneLogic : MonoBehaviour
 
     public List<PlayerSetting> playerSettings;
 
-    public static List<(string,string)> finallyPlayerSettings = new ();
+    public List<Material> materials;
+
+    public static List<(string,Material)> finallyPlayerSettings = new ();
     void Start() 
     {      
         normalColorBlock = playerSettings[0].name.colors;
@@ -40,31 +42,35 @@ public class StartSceneLogic : MonoBehaviour
 
         int count = 0;
 
-        var playersWithDuplicates = new HashSet<PlayerSetting>();
+        var playersWithError = new HashSet<PlayerSetting>();
 
         RecolorToNormal();
 
-        //Count the number of players with a name and add duplicate names to the list
+        //Count the number of players with a name and add duplicate and long names to the list
         for (int i = 0; i < playerSettings.Count; i++)
         {        
-            if (playerSettings[i].name.text != "")
+            if (playerSettings[i].name.text.Replace(" ","") != "")
             {
                 count++;
 
+                if(playerSettings[i].name.text.Length > 12)
+                {
+                    playersWithError.Add(playerSettings[i]);
+                }
                 for (int j = 0; j < playerSettings.Count; j++)
                 {
                     if (i != j && playerSettings[i].name.text == playerSettings[j].name.text)
                     {
-                        playersWithDuplicates.Add(playerSettings[i]);
-                        playersWithDuplicates.Add(playerSettings[j]);
+                        playersWithError.Add(playerSettings[i]);
+                        playersWithError.Add(playerSettings[j]);
                     }
                 }
             }
         }     
 
-        if (playersWithDuplicates.Count > 0 || count < 2)
+        if (playersWithError.Count > 0 || count < 2)
         {
-            RecolorToBlock(playersWithDuplicates);
+            RecolorToBlock(playersWithError);
             DeactivateStartButton();
         }             
         else
@@ -98,8 +104,24 @@ public class StartSceneLogic : MonoBehaviour
         {
             if (player.name.text == "")
                 continue;
-            finallyPlayerSettings.Add((player.name.text,player.color.captionText.text));
+            finallyPlayerSettings.Add((player.name.text, GetMaterial(player.color.captionText.text)));
         }
         SceneManager.LoadScene(1);
+    }
+
+    private Material GetMaterial(string name)
+    {
+        return name switch
+        {
+            "Зелёный" => materials[0],
+            "Голубой" => materials[1],
+            "Оранжевый" => materials[2],
+            "Розовый" => materials[3],
+            "Красный" => materials[4],
+            "Фиолетовый" => materials[5],
+            "Жёлтый" => materials[6],
+            "Коричневый" => materials[7],
+            _ => null,
+        };
     }
 }

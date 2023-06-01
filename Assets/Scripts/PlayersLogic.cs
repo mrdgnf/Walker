@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Player
 {
+    public int currentStandIndex = 0;
+
     public int place = 1;
 
     public int countOfBonuses = 0;
@@ -22,11 +25,11 @@ public class Player
 }
 public class PlayersLogic : MonoBehaviour
 {
-    public List<GameObject> playersGameObjects = new ();
 
-    public List<Player> players = new ();
+    public List<GameObject> playersGameObjects;
 
-    public List<Material> materials = new ();
+    public List<Player> players;
+
     void Start()
     {
         int count = 0;
@@ -34,32 +37,12 @@ public class PlayersLogic : MonoBehaviour
         {
             players.Add(new Player(playerSetting.Item1, playersGameObjects[count]));
 
-            players[count].gameObject.GetComponent<MeshRenderer>().material = GetMaterial(playerSetting.Item2);
+            players[count].gameObject.GetComponent<MeshRenderer>().material = playerSetting.Item2;
 
             players[count].gameObject.SetActive(true);
 
             count++;
         }
     }
-
-    public Material GetMaterial(string name)
-    {
-        return name switch
-        {
-            "Зелёный" => materials[0],
-            "Голубой" => materials[1],
-            "Оранжевый" => materials[2],
-            "Розовый" => materials[3],
-            "Красный" => materials[4],
-            "Фиолетовый" => materials[5],
-            "Жёлтый" => materials[6],
-            "Коричневый" => materials[7],
-            _ => null,
-        };
-    }
-
-    void Update()
-    {
-        
-    }
+    
 }

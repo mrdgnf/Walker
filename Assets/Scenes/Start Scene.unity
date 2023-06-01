@@ -1439,10 +1439,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1529,6 +1529,15 @@ MonoBehaviour:
     color: {fileID: 1389001959}
   - name: {fileID: 1573149384}
     color: {fileID: 1572862762}
+  materials:
+  - {fileID: 2100000, guid: 0de19aa5207405b49bb0c6b11b738a90, type: 2}
+  - {fileID: 2100000, guid: 65b1b9c34b8c5f143b54ea010de1699c, type: 2}
+  - {fileID: 2100000, guid: cf9813e46c2cc6e489698b1cf7cf7bdd, type: 2}
+  - {fileID: 2100000, guid: 26e0b37e2abb44a4cb93824111c98f63, type: 2}
+  - {fileID: 2100000, guid: 471e575650c29d44287f323ffe5991be, type: 2}
+  - {fileID: 2100000, guid: 2cc9a70f3507b5f4980b02de9785b632, type: 2}
+  - {fileID: 2100000, guid: 52fd998c48de69f468a6205ce3c942fb, type: 2}
+  - {fileID: 2100000, guid: 868a1441440310943aaf96a0aa0b5fc5, type: 2}
 --- !u!114 &156841879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1543,7 +1552,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playersGameObjects: []
   players: []
-  materials: []
 --- !u!1 &162049127
 GameObject:
   m_ObjectHideFlags: 0
