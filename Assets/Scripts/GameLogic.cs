@@ -1,88 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
-    private int MovingPlayerIndex = 0;
+    public GameObject GameResults;
 
-    private int CountOfPlayers = 0;
+    public GameObject ScoreBoard;
 
-    public Camera cameraMain;
+    public GameObject Cell;
 
-    public Camera cameraPlayer;   
+    public GameObject dice;
+
+    public Camera cameraPlayer;
+
+    public Text textOnScreen;
 
     public Text playerNameOnScreen;
 
     public PlayersLogic playersLogic;
 
     public List<Transform> standsTransform;
-    void Start()
-    {
-        CountOfPlayers = playersLogic.players.Count;
 
-        SetPlayerName();
-    }
-    private void SetPlayerName() => playerNameOnScreen.text = playersLogic.players[MovingPlayerIndex].name;
-
-    private void IncrementIndex()
-    {
-        MovingPlayerIndex++;
-        if (MovingPlayerIndex >= CountOfPlayers) MovingPlayerIndex = 0;
-    }
-    public IEnumerator MakeMove(int countOfSteps)
-    {       
-        yield return StartCoroutine(MovePlayerAndCamera(countOfSteps));
-
-        EndMove();
-    }
-
-    public IEnumerator MovePlayerAndCamera(int countOfSteps)
-    {
-        cameraPlayer.enabled = true;
-
-        MoveCamera();
-
-        for (int i = 0; i < countOfSteps; i++)
-        {           
-            var player = playersLogic.players[MovingPlayerIndex];         
-
-            Vector3 distanceOfMovement
-                = standsTransform[player.currentStandIndex + 1].position
-                - standsTransform[player.currentStandIndex].position;
-
-            MoveCamera();
-
-            yield return new WaitForSeconds(1f);            
-
-            player.gameObject.transform.position += distanceOfMovement;
-
-            player.currentStandIndex++;       
-        }
-
-        MoveCamera();
-
-        yield return new WaitForSeconds(1.5f);
-
-        cameraPlayer.enabled = false;
-    }
+    void Start() => playersLogic.SetPlayerName();        
 
     public void MoveCamera()
     {
-        Vector3 cameraPosition = playersLogic.players[MovingPlayerIndex].gameObject.transform.position;
+        Vector3 cameraPosition = playersLogic.players[playersLogic.MovingPlayerIndex].gameObject.transform.position;
 
         cameraPosition.y += 1.2f;
 
         cameraPlayer.transform.position = cameraPosition;
-    }
+    }     
 
-    public void EndMove()
+    public void GameFinish()
     {
-        IncrementIndex();
+        cameraPlayer.enabled = false;
 
-        SetPlayerName();
+        playerNameOnScreen.enabled = false;
+
+        textOnScreen.enabled = false;
+
+        dice.SetActive(false);
+
+        GameResults.SetActive(true);
+
+        foreach (var player in playersLogic.finalists)
+        {
+            GameObject ñell = Instantiate(this.Cell);
+
+            ñell.transform.SetParent(ScoreBoard.transform);
+
+            TableCell tableCell = ñell.GetComponent<TableCell>();
+
+            tableCell.place.text = player.place.ToString();
+            tableCell.playerName.text = player.name;
+            tableCell.moveCount.text = player.countOfMoves.ToString();
+            tableCell.bonusCount.text = player.countOfBonuses.ToString();
+            tableCell.penaltyCount.text = player.countOfPenalty.ToString();
+        }
 
         Dice.playerMove = false;
     }
+
+    public void RestartGame() => SceneManager.LoadScene(0);
+
 }

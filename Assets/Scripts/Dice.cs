@@ -14,13 +14,9 @@ public class Dice : MonoBehaviour
 
     public GameObject dice;
 
-    public GameLogic gameLogic;
+    public PlayersLogic playersLogic;
 
     public List<Vector3> diceSidesRotation;
-    void Start()
-    {
-        
-    }
 
     private void OnMouseDown()
     {
@@ -42,9 +38,9 @@ public class Dice : MonoBehaviour
             yield return new WaitForSeconds(0.05f);        
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
 
-        StartCoroutine(gameLogic.MakeMove(sideNumber));
+        StartCoroutine(playersLogic.MakeMove(sideNumber));
     }
 
     private int GetPseudoRandomSideIndex(int currentSideIndex)

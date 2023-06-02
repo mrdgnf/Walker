@@ -124,4 +124,18 @@ public class StartSceneLogic : MonoBehaviour
             _ => null,
         };
     }
+
+    public void BalanceColor()
+    {
+        for (int i = 0; i < playerSettings.Count; i++)
+        {
+            for (int j = 0; j < playerSettings.Count; j++)
+            {
+                if (i != j && playerSettings[i].color.captionText == playerSettings[j].color.captionText)
+                {
+                    //futeres
+                }
+            }
+        }
+    }
 }
