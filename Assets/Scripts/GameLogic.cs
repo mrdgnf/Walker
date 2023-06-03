@@ -28,7 +28,7 @@ public class GameLogic : MonoBehaviour
 
     public void MoveCamera()
     {
-        Vector3 cameraPosition = playersLogic.players[playersLogic.MovingPlayerIndex].gameObject.transform.position;
+        Vector3 cameraPosition = playersLogic.players[playersLogic.movingPlayerIndex].gameObject.transform.position;
 
         cameraPosition.y += 1.2f;
 
@@ -53,13 +53,15 @@ public class GameLogic : MonoBehaviour
 
             ñell.transform.SetParent(ScoreBoard.transform);
 
+            ñell.transform.localScale = Vector3.one;
+
             TableCell tableCell = ñell.GetComponent<TableCell>();
 
             tableCell.place.text = player.place.ToString();
             tableCell.playerName.text = player.name;
             tableCell.moveCount.text = player.countOfMoves.ToString();
             tableCell.bonusCount.text = player.countOfBonuses.ToString();
-            tableCell.penaltyCount.text = player.countOfPenalty.ToString();
+            tableCell.penaltyCount.text = player.countOfPenalty.ToString();            
         }
 
         Dice.playerMove = false;

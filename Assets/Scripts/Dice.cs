@@ -17,7 +17,6 @@ public class Dice : MonoBehaviour
     public PlayersLogic playersLogic;
 
     public List<Vector3> diceSidesRotation;
-
     private void OnMouseDown()
     {
         if (playerMove) return;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -27,6 +28,8 @@ public class StartSceneLogic : MonoBehaviour
     public List<Material> materials;
 
     public static List<(string,Material)> finallyPlayerSettings = new ();
+
+    private List<string> previousValues = new();
     void Start() 
     {      
         normalColorBlock = playerSettings[0].name.colors;
@@ -35,6 +38,11 @@ public class StartSceneLogic : MonoBehaviour
 
         blockColorBlock.normalColor = blockColorBlock.selectedColor = blockColorBlock.pressedColor = blockColorBlock.highlightedColor =
             blockColor;
+
+        foreach (var player in playerSettings)
+        {
+            previousValues.Add(player.color.captionText.text);
+        }
     }
 
     public void NamesUpdate()
@@ -125,17 +133,22 @@ public class StartSceneLogic : MonoBehaviour
         };
     }
 
-    public void BalanceColor()
+    public void BalanceColor(Dropdown dropdown)
     {
+
+        int index = playerSettings.FindIndex(ps => ps.color == dropdown);
+
         for (int i = 0; i < playerSettings.Count; i++)
         {
-            for (int j = 0; j < playerSettings.Count; j++)
+            if(i != index && playerSettings[i].color.captionText.text == dropdown.captionText.text)
             {
-                if (i != j && playerSettings[i].color.captionText == playerSettings[j].color.captionText)
-                {
-                    //futeres
-                }
+                Dropdown.OptionData option = playerSettings[i].color.options.Find(option => option.text == previousValues[index]);
+
+                playerSettings[i].color.value = playerSettings[i].color.options.IndexOf(option);
             }
         }
+
+        previousValues = playerSettings.Select(ps => ps.color.captionText.text).ToList();
+
     }
 }

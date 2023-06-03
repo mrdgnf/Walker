@@ -30,9 +30,9 @@ public class Player
 }
 public class PlayersLogic : MonoBehaviour
 {
-    public int maxPlace = 1;
+    public int availablePlace = 1;
 
-    public int MovingPlayerIndex = 0;
+    public int movingPlayerIndex = 0;
 
     public GameLogic gameLogic;
 
@@ -62,11 +62,11 @@ public class PlayersLogic : MonoBehaviour
 
     public void SetPlayerName() 
     {       
-        gameLogic.playerNameOnScreen.text = players[MovingPlayerIndex].name;
+        gameLogic.playerNameOnScreen.text = players[movingPlayerIndex].name;
 
-        gameLogic.playerNameOnScreen.color = players[MovingPlayerIndex].color;
+        gameLogic.playerNameOnScreen.color = players[movingPlayerIndex].color;
 
-        gameLogic.textOnScreen.color = players[MovingPlayerIndex].color;
+        gameLogic.textOnScreen.color = players[movingPlayerIndex].color;
     }
 
     private void AllocationOfPlayrsPlaces()
@@ -81,32 +81,32 @@ public class PlayersLogic : MonoBehaviour
             }
             else
             {
-                players[i].place = i + maxPlace;
+                players[i].place = availablePlace;
             }
         }
     }
 
     private void IncrementIndex()
     {
-        MovingPlayerIndex++;
-        if (MovingPlayerIndex >= players.Count) MovingPlayerIndex = 0;
+        movingPlayerIndex++;
+        if (movingPlayerIndex >= players.Count) movingPlayerIndex = 0;
     }
 
     private void IncrementIndexAfterFinish()
     {
-        if (MovingPlayerIndex > players.Count - 1)
-            MovingPlayerIndex--;
+        if (movingPlayerIndex > players.Count - 1)
+            movingPlayerIndex--;
     }
 
     private void PlayerFinish()
     {
         AllocationOfPlayrsPlaces();
 
-        maxPlace++;
+        availablePlace++;
 
-        finalists.Add(players[MovingPlayerIndex]);
+        finalists.Add(players[movingPlayerIndex]);
 
-        players.Remove(players[MovingPlayerIndex]);
+        players.Remove(players[movingPlayerIndex]);
 
         if (players.Count <= 0)
         {
@@ -140,74 +140,121 @@ public class PlayersLogic : MonoBehaviour
 
     private void BonusMove()
     {
-        players[MovingPlayerIndex].countOfBonuses++;
+        players[movingPlayerIndex].countOfBonuses++;
 
         Dice.playerMove = false;
 
         gameLogic.cameraPlayer.enabled = false;
     }
 
-    private IEnumerator MoveForwardPlayerAndCamera(int countOfSteps)
+    IEnumerator MovePlayerAndCamera(int countOfSteps, bool forward)
     {
         gameLogic.MoveCamera();
 
+        yield return new WaitForSeconds(0.42f);
+
         for (int i = 0; i < countOfSteps; i++)
         {
-            var player = players[MovingPlayerIndex];
+            var player = players[movingPlayerIndex];
 
-            var distanceOfMovement
-                = gameLogic.standsTransform[player.currentStandIndex + 1].position
-                - gameLogic.standsTransform[player.currentStandIndex].position;
+            var transform = player.gameObject.transform;
+
+            Vector3 vectorOfNewPosition = GetVectorOfNewPosition(player, forward);
+
+            yield return StartCoroutine(MovePlayer(transform, vectorOfNewPosition));
 
             gameLogic.MoveCamera();
 
-            yield return new WaitForSeconds(0.5f);
-
-            player.gameObject.transform.position += distanceOfMovement;
-
-            player.currentStandIndex++;
+            UpdatePlayerIndex(player, forward);
 
             if (player.currentStandIndex >= 27)
             {
                 gameLogic.MoveCamera();
                 yield break;
             }
-        }
 
-        gameLogic.MoveCamera();
+        }
     }
 
-    private IEnumerator MoveBackPlayerAndCamera(int countOfSteps)
+    Vector3 GetVectorOfNewPosition(Player player, bool forward)
     {
-        gameLogic.MoveCamera();
-
-        for (int i = 0; i < countOfSteps; i++)
+        if (forward)
         {
-            var player = players[MovingPlayerIndex];
-
-            Vector3 distanceOfMovement
-                = gameLogic.standsTransform[player.currentStandIndex - 1].position
+            return gameLogic.standsTransform[player.currentStandIndex + 1].position
                 - gameLogic.standsTransform[player.currentStandIndex].position;
+        }
+        else
+        {
+            return gameLogic.standsTransform[player.currentStandIndex - 1].position
+                - gameLogic.standsTransform[player.currentStandIndex].position;
+        }
+    }
+
+    IEnumerator MovePlayer(Transform transform, Vector3 vectorOfNewPosition)
+    {
+        Vector3 startMarker = transform.position;
+
+        Vector3 endMarker = transform.position + vectorOfNewPosition;
+
+        float distanceOfMovement = Vector3.Distance(startMarker, endMarker);
+
+        float speed = 1f;
+        float distanceCovered = 0f;
+        float fractionOfJourney = 0f;
+
+        float a = -1;
+        float b = 1;
+
+        float previousValueY = 0;
+
+        while (fractionOfJourney < 1.0f)
+        {
+            distanceCovered += speed * Time.deltaTime;
+
+            fractionOfJourney = distanceCovered / distanceOfMovement;
+
+            float y = a * Mathf.Pow(fractionOfJourney, 2) + b * fractionOfJourney;
+
+            transform.position -= new Vector3(0, previousValueY, 0);
+
+            transform.position = Vector3.Lerp(startMarker, endMarker, Mathf.SmoothStep(0.0f, 1.0f, fractionOfJourney));
+
+            transform.position += new Vector3(0, y, 0);
+
+            previousValueY = y;
 
             gameLogic.MoveCamera();
 
-            yield return new WaitForSeconds(0.5f);
-
-            player.gameObject.transform.position += distanceOfMovement;
-
-            player.currentStandIndex--;
+            yield return new WaitForEndOfFrame();
         }
+
+        transform.position -= new Vector3(0, previousValueY, 0);
 
         gameLogic.MoveCamera();
     }
+
+    void UpdatePlayerIndex(Player player, bool forward)
+    {
+        if (forward)
+        {
+            player.currentStandIndex++;
+        }
+        else
+        {
+            player.currentStandIndex--;
+        }
+    }
+
 
     public IEnumerator MakeMove(int countOfSteps)
     {
         gameLogic.cameraPlayer.enabled = true;
 
-        yield return StartCoroutine(MoveForwardPlayerAndCamera(countOfSteps));
+        players[movingPlayerIndex].countOfMoves++;
 
-        var player = players[MovingPlayerIndex];
+        yield return StartCoroutine(MovePlayerAndCamera(countOfSteps, forward: true));
+
+        var player = players[movingPlayerIndex];
 
         switch (player.currentStandIndex)
         {
@@ -215,13 +262,15 @@ public class PlayersLogic : MonoBehaviour
             case 13:
             case 19:
             case 24:
-                yield return StartCoroutine(MoveBackPlayerAndCamera(3));
+                players[movingPlayerIndex].countOfPenalty++;
+                yield return StartCoroutine(MovePlayerAndCamera(3,forward: false));
                 break;
 
             case 7:
             case 14:
             case 22:
                 yield return new WaitForSeconds(0.7f);
+                players[movingPlayerIndex].countOfBonuses++;
                 BonusMove();
                 yield break;
 

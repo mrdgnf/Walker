@@ -710,10 +710,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 79251015}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1379,7 +1379,6 @@ GameObject:
   - component: {fileID: 156841873}
   - component: {fileID: 156841872}
   - component: {fileID: 156841878}
-  - component: {fileID: 156841879}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -1550,24 +1549,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2cc9a70f3507b5f4980b02de9785b632, type: 2}
   - {fileID: 2100000, guid: 52fd998c48de69f468a6205ce3c942fb, type: 2}
   - {fileID: 2100000, guid: 868a1441440310943aaf96a0aa0b5fc5, type: 2}
---- !u!114 &156841879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156841871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7b9b77b6b4c3644e8c50db04807317c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxPlace: 1
-  MovingPlayerIndex: 0
-  gameLogic: {fileID: 0}
-  playersGameObjects: []
-  players: []
-  finalists: []
 --- !u!1 &162049127
 GameObject:
   m_ObjectHideFlags: 0
@@ -8383,10 +8364,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1389001959}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9911,10 +9892,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1572862762}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10424,10 +10405,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1621600334}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11221,10 +11202,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1770656014}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12916,10 +12897,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2110716985}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13237,10 +13218,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2133892135}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13474,10 +13455,10 @@ MonoBehaviour:
       - m_Target: {fileID: 156841878}
         m_TargetAssemblyTypeName: StartSceneLogic, Assembly-CSharp
         m_MethodName: BalanceColor
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2139238462}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Dropdown, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
